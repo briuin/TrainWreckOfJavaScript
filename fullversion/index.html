@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<h1>Train Wreck</h1>
+		<ul>
+			<li v-for="index in 10" style="margin:25px;font-size:18px;">
+				<div style="width:100px;display:inline-block;">Challenge{{index}}</div>
+				<div style="width:170px;display:inline-block;">: Answer should be </div>-> <strong style="color:blue;">{{answers[index]}}</strong>
+				<br/>
+				<div style="width:100px;display:inline-block;"></div>
+				<div style="width:170px;display:inline-block;"> &nbsp;&nbsp;Your answer is </div>-> <strong style="color:purple;">{{results[index]}}</strong>
+			</li>
+		</ul>
+	</div>
+	<script>
+		
+		new Vue({
+			el: "#app",
+			data:{
+				answers:[null,"x = 5, y = 2","[ 20, 50, 60, 70, 90, 100 ]", "16","bob and eve","[ 54, 1, 52, 1, 50, 1, 48, 1, 46, 1 ]","banana,watermelon,banana,apple,apple","250","num1 = 5, num2 = 8, num3 = 40","30","hellopng"],
+				results:[]
+			},
+			created(){
+				this.challenge1(2,5);
+				this.challenge2([110,50,60,90,70,20]);
+				this.challenge3([110,50,60,90,70,20]);
+				this.challenge4([{name: 'alice', age: 24 , gender: 'F'}, {name: 'bob', age: 30, gender: 'M'}, {name: 'eve', age: 16, gender: 'M'}]);
+				this.challenge5(100,45,10);
+				this.challenge6([{name: 'apple', height: 10, weight: 1, price: 500},{name: 'banana', height: 60, weight: 0.5, price: 300},{name: 'watermelon', height: 50, weight: 20, price: 480}]);
+				this.challenge7(100);
+				this.challenge8(2,5,8);
+				this.challenge9({data:[{score: 80,data:[]},{score: 100,data:[{score:60,data:[{score:20,data:[]},{score:30,data:[]}]},{score:50,data:[]},{score:55,data:[]}]},{score: 90,data:[]}]});
+				this.challenge10("testing");
+			},
+			methods:{
+				challenge1(x,y){
+
+					[x, y] = [y,x]
+
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[1] = `x = ${x}, y = ${y}`;
+				},
+				challenge2(scores){
+
+					scores.sort((a,b)=>a-b)
+
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[2] = scores;
+				},
+				challenge3(scores){
+
+					var result = scores.sort((a,b)=>a-b).reduce((accumulator, currentValue)=>currentValue %20 == 0? accumulator*5: accumulator+2, 0)
+
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[3] = result;
+				},
+				challenge4(accounts){
+
+					var result = accounts.filter(x=> x.gender=='M').map(x=> x.name).join(" and ")
+
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[4] = result;
+				},
+				challenge5(initialLength, startIndex, elementCount){				
+
+					var result = new Array(initialLength).fill(0).map((x,index)=>index%2==0?index:1).splice(startIndex,elementCount).reverse()
+
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[5] = result;
+				},
+				challenge6(fruits){
+
+					var result = fruits.find(x=>x.height==Math.max(...fruits.map(x=>x.height))).name + "," + [...fruits].reverse().map(x=>x.name).join(",") + "," + fruits.find(x=>x.price > 400).name
+					
+					// Rewrite the code above to one line and without ';' symbol
+					this.results[6] = result;
+				},
+				challenge7(value,result) {
+
+					setTimeout(()=>{new Promise((resolve)=>{resolve(result=value)}).then((response)=>new Promise((resolve)=>{setTimeout(()=>{resolve(result*=2)},1000)})).then((response)=>{ setTimeout(()=>{result+=50},1000)})},10)
+
+					// Rewrite the code above to one line and without ';' symbol
+					setTimeout(()=>{this.results.splice(7,1,result)},100);
+					setTimeout(()=>{this.results.splice(7,1,result)},1500);
+					setTimeout(()=>{this.results.splice(7,1,result)},3000);
+				},
+				challenge8(num1, num2, num3) {
+
+					new Promise((resolve)=>{resolve([num2,num1]=[num1,num2])}).then((response)=>new Promise((resolve)=>{resolve(num2=num1*num3)})).then(response=>{[num3,num2]=[num2,num3]})
+
+					// Rewrite the code above to one line and without ';' symbol
+					setTimeout(()=>{this.results[8] = `num1 = ${num1}, num2 = ${num2}, num3 = ${num3}`},10);
+				},
+				challenge9(scores, result) {
+
+					while(scores.data.length>0){scores = scores.data.find(x=>x.score == (result = Math.max(...scores.data.map(x=>x.score))))}
+
+					// Rewrite the code above to one line and without ';' symbol
+					setTimeout(()=>{this.results[9] = result},10);
+				},
+				challenge10(text, result) {
+
+					new Promise((resolve)=>{resolve(text.indexOf("e") != -1 ? text.split("t"): text.split("d"))}).then(response=>new Promise((resolve)=>{resolve(response.length > 2? "hello"+response[2]:"hi"+response[0])})).then(response=>{result = response.length>6?response.replace("i","p"):response.charAt(3)})
+
+					// Rewrite the code above to one line and without ';' symbol
+					setTimeout(()=>{this.results[10] = result},10);
+				}
+			}
+		});
+	</script>
+</body>
+</html>
